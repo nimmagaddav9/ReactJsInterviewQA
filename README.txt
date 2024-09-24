@@ -90,5 +90,73 @@ export default App;
 
 7. How to use nested components?
 
-Header --> Parent
-![alt text](image.png)
+Header component --> common for layout. <Menu /> is nested inside header.
+App Component --> nested <Header /> component
+
+8. What is state in react ?
+
+button --> counter value  1-->2 --> 3 value is stored in state.
+
+In React, state is an object that represents the parts of the app that can change. 
+Each component can have its own state, which can be managed within the component and used to render the UI.
+When the state changes, React re-renders the component to reflect the new state.
+
+9. What is state in react?
+
+import React, {Component} from "react";
+//class based component
+class Counter extends Component {
+    constructor(props){
+        super(props);
+        //Initializing state
+        this.state ={
+            count: 0;
+        };
+    }
+    render() {
+        return(
+        <h1>Count: {this.state.count}</h1>
+        );
+    }
+}
+export default Counter;
+
+
+-----------------------------
+//functional based component
+import React, {useState} from "react";  //useState
+function Counter(){
+    //Initializing state using useState Hook
+    const [count, setCount] = useState(0);  //update state with setCount
+
+    return (
+        <h1>Count: {count}</h1>
+    );
+}
+export default Counter;
+
+=========================================
+//class component
+import React, {Component} from "react";
+class Counter extends Component {
+    state = {
+        count: 0
+    }
+    render(){
+        return(
+            <h1> Count: {this.state.count}</h1>
+        )
+    }
+}
+export default Counter; toow  
+
+
+10. How to update state in react?
+State in React is updated using the setState method in class components or the useState hook in functional components.
+// class
+this.setState({count: this.state.count + 1})
+
+//functional
+const [count, setCount] = useState(0);
+
+11. 
