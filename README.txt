@@ -159,4 +159,621 @@ this.setState({count: this.state.count + 1})
 //functional
 const [count, setCount] = useState(0);
 
-11. 
+11. What is setState Callback?
+The setState method can accept a callback function as the second argument, which is executed once the state has been updated and the component has re-rendered.
+
+12. Why you should not update state directly, explain wiht example?
+Updating state directly does not trigger a re-render of the component, leading to inconsistencies in the UI.
+Instead, always use setState (class-based) or state(functional-based) hooks.
+
+13. What are props in react?
+Props(properties) are used to pass data and event handlers to child component.(communicate b/w components)
+props ensure a one-way data flow, from parent to child.
+props cannot be modified by the child component that receives them. (read-only)
+
+Example:
+import React from "react";
+
+//child component
+function Greeting(props){
+    return <h1>hello, {props.name}!</h1>
+}
+
+//parent component
+function App(){
+    return(
+        <div>
+        <Greeting name="vijay" />
+        <Greeting name="krishna" />
+        </div>
+    );
+}
+
+export default App;
+==============================
+
+14. What is difference between state and props ?
+
+       state                                            
+    State is built-in object used to store data that may change over the lifecycle of a component.
+    It is managed within the component itself.
+
+    State is mutable. 
+    It can be updated using the setState method in class components or the useState hook in functional components.
+
+    State is local to the component and cannot be accessed or modified by child components.
+
+    Props
+    Props(properties) are used to pass data from a parent component to a child component.
+    They are read-only and immutable within the child component.
+
+    Props are immutable. Once passed to child component, they cannot be modified by the child.
+
+    Props are passed from parent component to a child component and can be accessed by the child.
+
+
+15. What is lifting state up in react?
+Lifting State Up is a pattern in React where state is moved up to the closest common ancestor of components that need to share that state.
+Single Source of Truth: By managing the state in the parent component, you can ensure that the state is consistent across multiple child components.
+Simplified State Management: The state logic is centralized, making it easier to maintain and debug.
+
+Parent <----- child (button). Manage state in single parent component.
+
+16. What is children prop in react?
+The children prop is a special property in React used to pass the content that is nested inside a component.
+
+Child Component --> {props.children}
+Parent Component --> App() <h1> <p><h2><button>
+
+17. What is defaultProps in React?
+defaultProps is used to set default values for the props in a component.
+
+Greeting.defaultProps ={
+    name: "Guest",
+}
+//usage
+<Greeting /> //renders "hello, guest"
+
+18. What are fragments in react and its advantages?
+Fragments allow you to group multiple elements without adding extra nodes to the DOM.
+<React.Fragment>
+<li>Item, 1</li>
+<li>Item 2</li>
+</React.Fragment>
+<>
+</>
+
+19. How to use styling in react.js?
+we can ise inline styles, CSS stylesheets, or CSS-in-JS libraries like styled-components.
+
+inline styles
+function StyledComponent(){
+    return(
+        <div
+        style={{
+            color: "blue",
+            backgroundColor: "lightgray"
+        }}>
+        This is Styled Component.
+        </div>
+    );
+}
+
+
+styles.css
+.container{
+    color: blue,
+    backgroundColor: lightgray
+}
+import "./styles.css"
+function StyledComponent(){
+    return <div className = "container"> this is styled component</div>;
+}
+
+20. How can you conditionally render components in React?
+We can use Javascript conditional operators (like if, &&, ?:) to conditionally render components.
+
+21. How to render list of data in react?
+we can use the map function(ES6) to iterate over an array and render each item.
+
+22. What is Key prop?
+The key prop is a unique identifier for each element in a list, used by React to identify which items have changed, are added, or removed.
+
+
+23. Why indexes for keys are not recommended?
+Using indexes as keys can lead to performance issues and unexpected behavior when list items are reordered or removed.
+Keys should be unique and stable.
+
+24. How to handle buttons in react?
+
+25. How to handle inputs in react?
+we can use controlled components where form data is handled by the component's state.
+
+26. Explain lifecycle methods in react?
+Lifecycle methods in React are special methods that get called at different stages of component's lifecycle.
+Mounting: When a component is being inserted into the DOM.
+Updating: When a component's state or props change.
+Unmouting: when a component is being removed from the DOM.
+
+class LifecycleDemo extends React.Component{
+    componentDidMount(){
+        console.log("component mounted"); //render once only.
+    }
+    componentDidUpdate(prevProps, prevState){ //gives prevProps and prevState
+        console.log("component updated"); 
+    }
+
+    componentWillUnmount(){
+        console.log("component will unmount"); //cleanup things
+    }
+
+    render(){
+        return <div> Lifecycle method</div>
+    }
+}
+
+27. What are the popular hooks in react and explain it's usage?
+
+useState: Manages state in functional components.
+useEffect: Manages side effects in functional components.
+useContext: Consumes context in functional components.
+useReducer: Manage state with a reducer function, For More complex state management.
+useRef: Accesses DOM elements or stores mutable values.
+useCallback: performance improvement usecase
+useMemo: performance improvement usecase.
+
+28. What is useState and how to manage state using it?
+
+import React, {useState} from 'react';
+
+function Counter(){
+    const [count, setCount]= useState(0);
+
+    return(
+        <div>
+        <p> you clicked {count} times</p>
+        <button onClick={()=>setCount(count+1)}>Click Me</button>
+        </div>
+    );
+}
+export default Counter;
+
+29. What is useEffect hook and how to manage side effects?
+useEffect is a hook that manages side effects like data fetching(prevState), subscriptions, or manually changing the DOM.
+
+import React, {useEffect, useState} from 'react';
+
+function DataFetcher(){
+    useEffect(()=>{}, [], []); //Empty array means this effect runs only once.
+
+    useEffect(()=>{}, [dependency]); //run if dependency value changes.
+
+  useEffect(()=>{
+    return ()=>{};
+
+  }, []) //cleanup method.
+  retunr <div></div>;
+}
+export default Counter;
+
+
+30. How to implement data fetching in react.js?
+ask interviewer question--> how to implement onClick on page load?
+
+31. How to manage loading state?
+const [loading, setLoading] = useState(false);
+
+32. What is prop drilling and how to avoid it? What is ContextAPI?
+Prop drilling occurs when you pass data through many layers of compoments.
+It can be avoided using the Context API or state management libraries like Redux.
+
+A ---> B, C--> D, A-->D.
+
+33. What is Context API in React, and why is it used?
+Context API in React provides a way to share values(like data or functions) between components without having 
+to pass props through every level of the component tree. It is used to avoid the prop drilling.
+
+import React, {createContext} from 'react';
+
+//create a Context
+const MyContext = createContext();
+
+//Provider component
+
+//wrap context in root component.
+
+// A, B, C, D
+global state
+
+34. How do you consume context using the useContext hook?
+The useContext hook allows functional components to access context values directly.
+
+35. How can you update context values?
+//create context
+//provider component
+//pass context name
+//update value by onClick() function.
+
+36. How do you use multiple contexts in a single component?
+//we need to wrap multiple context
+//useContext(firstContext) and secondContext.
+
+37. What are the advantages of using the Context API over prop drilling?
+Context API reduces the need for prop drilling, making the code more readable and maintainable.
+It allows for easy sharing of state and functions across the component tree without passing props through every level.
+
+//without Context API(prop drilling)
+<Parent>
+<Child>
+<GrandChild value={value} />
+</Child>
+</Parent>
+
+
+//with Context API
+<MyProvider>
+    <GrandChild />
+</MyProvider>
+
+
+38. What is the useReducer hook, and when should you use it?
+The useReducer hook is used for state management in React. 
+It is suitable for handling more complex state logic compared to useState.
+
+useReducer alternate of useState.
+
+import React, {useReducer} from 'react';
+
+const[state, dispatch] = useReducer(reducer, initialState);
+//dispatch action with type property
+
+
+39. Can you useReducer with complex state objects?
+yes.
+
+40. how do you pass additional arguments to the reducer function?
+
+whenever we dispatch action using payload.
+
+dispatch({type: 'update', payload:{value:42}});
+
+41. How to do you handle side effects with useReducer?
+Yes
+we can useEffect inside the API call with data action.payload.
+
+42. What is useRef Hook?
+
+The useRef hook is used to access and interact with DOM elements directly
+and to persist mutable values across renders without causing re-renders.
+
+
+43. How can useRef be used to store mutuable values?
+useRef can store any mutuable values, and changes to the ref do not cause re-renders.
+
+44. What is forwardRef and when would you use it?
+forwardRef is a function that allows you to pass refs through components to access DOM elements or child component instances.
+
+45. How to manage forms in react?
+Forms in React can be managed using controlled components where form data is handled bu the component's state.
+
+//create JSX structure with form.
+
+46. What are Custom Hooks and why do We Need Them?
+
+Custom Hooks in React are JavaScript functions that allow you to reuse stateful logic across multiple components.
+They enable you to extract and share common logic without repeating code, promoting code reusability and separaration concerns.
+
+c1, c2, c3. c4.c5--> one custom hooks --> state
+Advantages:
+Code Reusability: Custom hooks allow you to reuse stateful logic without duplicating code.
+Separation of Concerns: They help spearate the logic from the component's structure, making the code more modular and easier to maintain.
+Cleaner Code: By Moving common logic into custom hooks, components become cleaner and more focused on their core responsibilites.
+
+47. Implement useFetch custom hook/Custom hook example?
+
+48. Implement useWindowResize custom hook?
+
+
+49. What is React Router DOM and why is it used?
+
+React Router DOM is a routing library built on top of React Router. 
+It enables dynamic routing in web applications, allowing you to define routes and naviagte between different components without reloading the page.
+
+Routing Version 6 latest.
+moving 1 page to another page --> routing.
+
+50. How do you create a basic route in React Router DOM?
+A basic route is created using the Route component, which maps a URL path to a specific element.
+<Route path = "/home" element = {<Home />} />
+
+51. How to implement basic routing using react router dom?
+
+file --> index.js
+
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
+const App = () => (
+    <BrowserRouter>
+        <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+        </Routes>
+    </BrowserRouter>
+);
+
+export default App;
+
+52. How to create a link to another route using React Router DOM?
+Use the Link component to create navigation links.
+import {Link} from 'react-router-dom';
+
+<Link to="/home">Home</Link>
+<Link to="/about">About</Link>
+
+53. How do you use URL parameters/ Dynamic routing in React Router DOM?
+
+/product list
+1, 2,3, 4,5
+<Route path="/user/:userId" element={<User />} />
+
+54. How can you perform a redirect in React Router DOM?
+use the Navigate component to perform a redirect.
+<Navigate to="/home">;
+//use navigate and to property
+
+
+import {Navigate} from 'react-router-dom';
+
+const Login = ()=>{
+    const isLoggedIn = true;
+    if(isLoggedIn){
+        return <Navigate to="/home">;
+    }
+    return <div> please login</div>;
+}
+
+export default Login;
+
+55. What is a Routes component on React Router DOM?
+The Routes component is used to define a set of routes, where only the first matching route is rendered.
+
+<Route path="/home" element={<Home />}
+
+56. How do you handle nested routes in React Router DOM?
+
+<Routes>
+    <Route path="/dashboard" element={<Dashboard />}>
+    <Route path="/home" element={<Home />}
+</Routes>
+
+57. How can you handle 404 errors (not found) in React Router DOM?
+Use a Route without a path prop inside Routes to catch all unmatched routes.
+
+const NotFound = () => <h1> 404-not found</h1>;
+
+<Route path="*" element={<NotFound />}/>
+
+58. How do you programtically naviagte using React Router DOM?
+Use the useNavigate hook to navigate programtically within your components.
+
+import {useNavigate} from 'react-router-dom';
+
+const navigate = useNavigate();
+navigate('/home');
+
+59. Explain useCallback hook with example?
+//callback function
+The useCallback hook is used to memoize callback functions. 
+This means that the function provided to useCallback will only be recreated if one of it dependencies has changed.
+This is particularly useful when passing callbacks to child components that are optimized with React.memo, as it can prevent unnecessary renders.
+
+60. Explain useMemo hook with example?
+The useMemo hook is used to memoize expensive calcualtions so that they are not recalculated on every render.
+It takes a function to compute a value and an array of dependencies, and it onlyy recomputes the value when one of the dependencies has changed.
+
+//value
+
+61. Explain React.memo with example?
+React.memo is a higher-order component that memoizes the result of a component.
+It prevents the component from re-rendering unless the props have changed. 
+This is useful for optimizing performance by avoiding unecessary renders of pure components.
+
+62. Explain the Reconciliation process in React and how it works?
+Reconciliation is the process React uses to update the DOM efficiently.
+It involves comparing the new Virtual DOM with the previous one and determining the minimum number of changes needed to update the actual DOM.
+
+63. What are Pure Components?
+PureComponent is a base class in React that implements shouldComponentUpdate with a shallow prop and state comparison.
+It helps prevent unnecessary re-renders by ensuring that the component only re-renders when there are actual changes in props or state.
+
+class childComp extends PureComponent{
+    //class based components
+}
+
+64. Explain higher order component with example?
+A Higher-Order Component (HOC) is a function that takes a component and returns a new component with added functionality.
+HOCs are used for reusing component logic and enhancing components with additional behavior.
+
+65. What is redux, explain core principles?
+//state management(centralized store)
+Redux is a predicatable state container for JavaScript apps. Redux acts as centralized store for state management in your application.
+Advantages:
+Single Source of Truth: The State of the application is stored in a single object.
+State is Read-Only: The only wat to change the state is to emit an action, an object describing what happened.
+Changes are made with Pure Functions: Reducers are pure functions that take the previous state and an action, return the next state.
+
+66. What are actions in Redux, explain with example?
+Actions are plain JavaScript objects that describe what happened in the application.
+They must have a type property that indicates the type of action being performed.
+
+//action.js
+export const increment = () => ({type: 'INCREMENT'});
+export const decrement = () => ({type: 'DECREMENT'});
+
+67. Explain Reducers in Redux with an example?
+Reducers are pure functions that take the current state and an action , and return a new state based on the action type.
+
+const counterReducer = (state = intitialState, action)=>{
+    switch(action.type){
+        case 'INCREMENT':
+        return {count: state.count +1};
+        case 'DECREMENT':
+        return {count: state.count - 1};
+        default:
+        return state;
+    }
+}
+
+68. What is the role of the Redux Store?
+The Store holds the whole state tree of the application. 
+It allows access to the state via getState(), dispatching actions via dispatch(action), and registering listeners via subscribe(listener).
+
+
+69. How do you connect React components to Redux store using connect?
+The connect function connects a React component to the Redux store.
+It maps state and dispatch to the component's props.
+
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => ({count: state.count});
+const mapDispatchToProps = {increment};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+70. How do you use the useSelector and useDispatch hooks in a functional React component?
+useSelector is used to access the Redux state,
+const count = useSelector((state)=>state.count)
+
+useDispatch is used to dispatch actions in functional components.
+
+const disptach = useDispatch();
+
+71. What is Redux Toolkit?
+Redux Toolkit is an offical, opinionated toolset for efficient Redux development.
+It simplifies store setup, reduces boilerpate, and includes useful tools like createSlice and createAsyncThunk.
+
+72. How to configure store in redux toolkit?
+Redux Toolkit is an official, opinionated toolset for efficient Redux development.
+It Simplifies store setup, reduxes biolerplate, and includes useful tools like createSlice and createAsyncThunk.
+
+import {configureStore} from '@reduxjs/toolkit'; //import
+const store = configureStore({
+    reducer:{
+        //pass all reducers
+    },
+});
+
+export default store;
+
+73. Explain createSlice in Redux Toolkit with an example?
+createSlice is a function that generates action creators and action types, and create a reducer based on a object of "slice" reducers.
+
+import {createSlice} from '@reduxjs/toolkit';
+
+74. What are controlled components in React?
+Controlled components are React components where the form data is handled by the React state.
+The input's value is always driven by the React state.
+
+75. What are uncontrolled components in React?
+Uncontrolled components are React Components where the form data is handled by the DOM itself.
+The input's value is not driven by the React state.
+
+76. How do you optimize performance in React applications?
+    Using useMemo and useCallback to memoize expensive calculations and functions.
+    Implementing shouldComponentUpdate or using React.memo for Pure Components.
+    Code Splitting and lazy loading.
+
+77. What is code splitting in React?
+Code splitting is a feature supported by React that allows you to split your code into various bundles which can then be loaded on demand.
+
+import React, {Lazy, Suspense} from 'react';
+
+<Suspense> provides fallback
+
+78. What are render props in React? give an example?
+Render props are a technique for sharing code between React components using a prop whose value is a function.
+This function returns a React element and is used by the component to render part of its output.
+
+79. What are portals in React?
+Portals provide a way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.
+This is useful for things like modals, tooltips and overlays.
+
+80. How do you implement lazy loading in React?
+Lazy loading in React can be implemented using the React.lazy and Suspense components.
+This allows you to load components on demand, improving initial load times.
+
+81. How do you define props for a functional component in Typescript?
+
+interface Props{}
+const MyComponent: React.FC<Props>=({title, count}=>{})
+
+82. How do you use the useState hook with Typescript?
+We can define the type of the state variable by specifying it in the useStata generic.
+
+const [count, setCount]= useState<number>(0);
+
+83. How do you type event handlers in React with Typescipt?
+
+const [value, setValue] = useState<string>('');
+
+const handleChange = (e: React.changeEvent<HTMLInputElement>)=>{}
+                                           <TextField> <Selectfield>
+
+
+84. How do you handle optional props in React components with Typescript?
+In Typescript, you can handle optional props by using the ? operator in the props interface or type alias.
+
+interface Props{
+    subtitle?: string;
+}
+
+85. How do you use the useReducer hook with Typescript?
+
+86. How do you type the context API in React with Typescript?
+
+87. How do you write a simple test in Jest?
+Jest is a JavaScript testing framework maintained by Facebook. 
+It is commonly used with React because it provides a simple and powerful testing solution with features like snapshot testing, coverage reporting, and built in assertions.
+
+//JEST, RTL
+
+test() or it() callback function.
+
+88. How do you render a component for testing using React Testing Library?
+
+import {render} from '@testing-library/react';
+import MyComponent from './MyComponent';
+test('renders MyComponent', ()=>{
+    render(<MyComponent />);
+});
+
+89. How can you find elements in the DOM using the React Testing Library?
+//first render the component, then check if we have the text "helloworld" use getByText
+//if element toBeIntheDocument();
+
+90. How do you simulate user events in React Testing Library?
+
+//first render the component.
+//then fireEvent.click(button);
+
+91. How can you test component props with React Testing Library?
+//first render the component.
+expect //title present or not.
+
+92. create a Controlled Input Component?
+
+93. Implement toggle Visibility of a component?
+
+94. Fetch Data from an API and Display it, along with loading state?
+
+95. Create a Reusable Button Component with Props?
+
+96. Build a Component that Uses and Effect to Perform Cleanup.
+
+97. Implement a context with a Reducer for Global State Management?
+
+98. Build a Component with Conditional Rendering Based on Props.
+
+99. Implement a simple form Component?
+
+100. how to handle erro in simple form component?
